@@ -1,0 +1,57 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Post
+{% endblock title %}
+
+{% block content %}
+<h1>Пост</h1>
+{% if post %}
+<!-- Если есть посты, то выводим таблицу с ними -->
+<table>
+    <tr>
+        <td>
+            Заголовок
+        </td>
+        <td>
+            Дата публикации
+        </td>
+        <td>
+            Категория
+        </td>
+        <td>
+            Категория
+        </td>
+        <td>
+            Текст
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            {{ post.title|censor }}
+            <!-- не забываем, что переменные в шаблоне ничем не отличаются от переменных в Python. Здесь также можно получать доступ к полям класса. Например, здесь мы выводим имя, в следующем столбце описание, и т. д.  -->
+        </td>
+        <td>
+            {{ post.dateCreation|date:'d-M-Y H:m' }}
+        </td>
+        <td>
+            {{ post.categoryType }}
+            <hr>
+            <button> <a href="{% url 'subscribe' post.categoryType %}"> Подписаться</a> </button>
+        </td>
+        <td>
+            {{ custom_user }}
+        </td>
+        <td>
+            {{ post.text|censor }}
+            <!-- truncatechars - фильтр по символам, truncatewords - фильтр по словам -->
+        </td>
+    </tr>
+</table>
+{% else %}
+<h1>Новостей нет!</h1>
+{% endif %}
+{% endblock content %}
